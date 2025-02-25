@@ -13,14 +13,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Product {
   id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String?  @db.Text
+  title       String
+  description String?
   completed   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("product")
+}
+
+model Measurement {
+  id        String   @id @default(uuid())
+  user_id   String   @db.VarChar(255)
+  neck      Float
+  chest     Float
+  weist     Float
+  hips      Float
+  inseam    Float
+  sleeve    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Order     Order[]
+
+  @@map("measurement")
+}
+
+model Order {
+  id               String      @id @default(uuid())
+  user_id          String      @db.VarChar(255)
+  measurement      Measurement @relation(fields: [measurementId], references: [id])
+  measurement_id   String      @unique()
+  product_id       Float
+  status           Float
+  delivery_price   Float
+  total_price      Float
+  delivery_address Float
+  delivery_date    DateTime    @default(now())
+  order_date       DateTime    @default(now())
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @default(now())
+  measurementId    String
+
+  @@map("order")
 }
