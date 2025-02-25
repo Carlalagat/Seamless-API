@@ -53,10 +53,10 @@ model Fabric {
 }
 
 model FabricType {
-  id        String   @id @default(uuid())
+  id       String @id @default(uuid())
   fabricId  String
 
-  fabric Fabric @relation(fields: [fabricId] references: [id])
+  fabric    Fabric   @relation(fields: [fabricId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
