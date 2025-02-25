@@ -1,7 +1,5 @@
 # Seamless - Tailor-Made Clothing Platform 👔👗
 
-![Seamless Banner](https://via.placeholder.com/800x200?text=Seamless+Platform)
-
 Welcome to the Seamless project! This platform connects clients with tailors for custom-made clothing through a user-friendly interface. This guide will walk you through everything you need to know to get started, even if you've never used Git, GitHub, or any of our technical tools before.
 
 ## 📋 Table of Contents
@@ -175,11 +173,14 @@ Our project uses PostgreSQL with Prisma to manage the database:
 2. Update the `DATABASE_URL` in your `.env` file 
 3. Run database migrations to create the necessary tables:
    ```
-   npx prisma migrate dev
+   npm run prisma:generate
+   ```
+   ```
+   npm run prisma:migrate
    ```
 4. Seed the database with initial data:
    ```
-   npx prisma db seed
+   npm run prisma:seed
    ```
 
 #### 4. Start the Development Server
@@ -223,21 +224,13 @@ Before creating a new branch, always get the latest code:
 
 ```
 git fetch
-git pull
+git pull origin main
 ```
 
 **Why this is important:** 
 - `git fetch` checks for any changes on GitHub
-- `git pull` downloads those changes to your computer
+- `git pull origin main` downloads those changes to your computer
 - Doing this daily prevents conflicts and ensures you're working with the latest code
-
-#### Step 3: Create a new branch for your feature
-
-```
-git checkout -b feature/user-registration
-```
-
-Replace "user-registration" with a short description of what you're working on. This command creates and switches to the new branch.
 
 ### Making Changes
 
@@ -274,10 +267,10 @@ Replace the message with a brief description of what you did. Always use present
 #### Step 4: Push your changes to GitHub
 
 ```
-git push -u origin feature/user-registration
+git push -u origin develop
 ```
 
-Replace "feature/user-registration" with your branch name. The `-u` flag sets up tracking, and you only need it the first time you push a new branch.
+Replace "develop" with your branch name. The `-u` flag sets up tracking, and you only need it the first time you push a new branch.
 
 For subsequent pushes, you can simply use:
 
@@ -292,7 +285,7 @@ Once your feature is complete and pushed to GitHub:
 1. Go to the repository page on GitHub
 2. Click on "Pull requests"
 3. Click the green "New pull request" button
-4. Set "base" to `develop` and "compare" to your feature branch
+4. Set "base" to `main` and "compare" to your `develop` branch
 5. Click "Create pull request"
 6. Add a title and description explaining what your changes do
 7. Assign a reviewer from the team
