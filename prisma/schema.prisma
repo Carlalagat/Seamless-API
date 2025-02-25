@@ -13,14 +13,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  phoneNumber String
+  role        Role
+  authToken   String   @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+  @@map("user")
+}
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
+  id          String   @id @default(uuid())
+  fabricId    String
+  productName String
   description String?  @db.Text
-  completed   Boolean  @default(false)
+  price       Float
+  location    String
+  tailorName  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("product")
+}
+
+model Fabric {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fabricTypes FabricType[]
+
+  @@map("fabric")
+}
+
+model FabricType {
+  id        String   @id @default(uuid())
+  fabricId  String
+
+  fabric Fabric @relation(fields: [fabricId] references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("fabrictype")
+}
+
+enum Role {
+  CLIENT
+  TAILOR
+  ADMIN
 }
