@@ -43,7 +43,7 @@ model Measurement {
 model Order {
   id               String      @id @default(uuid())
   user_id          String      @db.VarChar(255)
-  measurement      Measurement @relation(fields: [measurementId], references: [id])
+  measurement      Measurement @relation(fields: [measurement_id], references: [id])
   measurement_id   String      @unique()
   product_id       Float
   status           Float
@@ -54,7 +54,6 @@ model Order {
   order_date       DateTime    @default(now())
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @default(now())
-  measurementId    String
 
   @@map("order")
 }
