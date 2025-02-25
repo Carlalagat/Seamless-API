@@ -23,7 +23,8 @@ model User {
   authToken   String   @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  media      Media[]
+  reviews Review[]
   @@index([email])
   @@map("user")
 }
@@ -38,7 +39,8 @@ model Product {
   tailorName  String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  reviews     Review[]
+  media       Media[]
   @@map("product")
 }
 
@@ -97,8 +99,37 @@ model FabricType {
   @@map("fabrictype")
 }
 
+model Review{
+  id    String  @id @default(uuid())
+  user_id String @unique
+  user User @relation(fields: [user_id], references: [id])
+  rating Float
+  comment String
+  product_id String
+  product Product @relation(fields: [product_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Media{
+  id String @id @default(uuid())
+  product_id String
+  product Product @relation(fields: [product_id], references: [id])
+  user_id String
+  user User @relation(fields: [user_id], references: [id])
+  url String
+  type Type
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role {
   CLIENT
   TAILOR
   ADMIN
+}
+enum Type {
+  IMAGE
+  VIDEO
 }
