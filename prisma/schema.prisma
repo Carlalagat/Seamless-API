@@ -42,6 +42,40 @@ model Product {
   @@map("product")
 }
 
+model Measurement {
+  id        String   @id @default(uuid())
+  user_id   String   @db.VarChar(255)
+  neck      Float
+  chest     Float
+  weist     Float
+  hips      Float
+  inseam    Float
+  sleeve    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Order     Order[]
+
+  @@map("measurement")
+}
+
+model Order {
+  id               String      @id @default(uuid())
+  user_id          String      @db.VarChar(255)
+  measurement      Measurement @relation(fields: [measurement_id], references: [id])
+  measurement_id   String      @unique()
+  product_id       Float
+  status           Float
+  delivery_price   Float
+  total_price      Float
+  delivery_address Float
+  delivery_date    DateTime    @default(now())
+  order_date       DateTime    @default(now())
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @default(now())
+
+  @@map("order")
+}
+
 model Fabric {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -56,7 +90,7 @@ model FabricType {
   id       String @id @default(uuid())
   fabricId String
 
-  fabric Fabric @relation(fields: [fabricId] references: [id])
+  fabric    Fabric   @relation(fields: [fabricId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
