@@ -18,17 +18,19 @@ datasource db {
 
 // User model: Represents platform users (clients, tailors, admins)
 model User {
-  id          String   @id @default(uuid()) // Unique identifier for the user
-  username    String   @unique // Username for login, must be unique
-  email       String   @unique // Email address, must be unique
-  password    String // Hashed password for authentication
-  phoneNumber String // Contact phone number
-  role        Role // User type: CLIENT, TAILOR, or ADMIN
-  authToken   String   @default(uuid()) // Token for authentication sessions
-  createdAt   DateTime @default(now()) // Timestamp when user was created
-  updatedAt   DateTime @updatedAt // Timestamp when user was last updated
-  media       Media[] // Media files uploaded by this user
-  reviews     Review[] // Reviews written by this user
+  id          String       @id @default(uuid()) // Unique identifier for the user
+  username    String       @unique // Username for login, must be unique
+  email       String       @unique
+  password    String
+  phoneNumber String
+  role        Role
+  authToken   String       @default(uuid()) // Token for authentication sessions
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  media       Media[]
+  reviews     Review[]
+  Measurement Measurement?
+  Order       Order[]
 
   @@index([email]) // Index on email for faster queries
 }
@@ -36,91 +38,97 @@ model User {
 // Product model: Represents clothing items available for order
 model Product {
   id          String   @id @default(uuid()) // Unique identifier for the product
-  fabric_id   String // Reference to the fabric used (no relation defined)
-  productName String // Name of the clothing item
+  fabric_id   String
+  fabric      Fabric   @relation(fields: [fabric_id], references: [id])
+  productName String
   description String?  @db.Text // Detailed description, optional, supports long text
-  price       Float // Product price
-  location    String // Location where the product is made/available
-  tailorName  String // Name of the tailor who creates this product
-  createdAt   DateTime @default(now()) // Timestamp when product was created
-  updatedAt   DateTime @updatedAt // Timestamp when product was last updated
-  reviews     Review[] // Reviews for this product
+  price       Float
+  location    String
+  tailorName  String 
+  createdAt   DateTime @default(now()) 
+  updatedAt   DateTime @updatedAt
+  reviews     Review[]
   media       Media[] // Media files (images/videos) of this product
+  Order       Order?
 }
 
 // Measurement model: Stores user body measurements for custom tailoring
 model Measurement {
   id        String   @id @default(uuid()) // Unique identifier for the measurement set
-  user_id   String   @db.VarChar(255) // ID of user these measurements belong to (no relation defined)
-  neck      Float // Neck measurement in inches/cm
-  chest     Float // Chest measurement in inches/cm
-  weist     Float // Waist measurement in inches/cm (note: typo in field name)
-  hips      Float // Hip measurement in inches/cm
-  inseam    Float // Inseam measurement in inches/cm
-  sleeve    Float // Sleeve measurement in inches/cm
+  user      User     @relation(fields: [user_id], references: [id])
+  user_id   String   @unique
+  neck      Float
+  chest     Float
+  waist     Float // Waist measurement in inches/cm (note: typo in field name)
+  hips      Float
+  inseam    Float
+  sleeve    Float
   createdAt DateTime @default(now()) // Timestamp when measurements were recorded
-  updatedAt DateTime @default(now()) // Timestamp when measurements were last updated
-  Order     Order[] // Orders using these measurements
+  updatedAt DateTime @default(now())
+  Order     Order[]
 }
 
 // Order model: Represents a customer's order for custom clothing
 model Order {
-  id               String      @id @default(uuid()) // Unique identifier for the order
-  user_id          String      @db.VarChar(255) // ID of user who placed the order (no relation defined)
-  measurement      Measurement @relation(fields: [measurement_id], references: [id]) // Measurements to use for this order
-  measurement_id   String      @unique() // ID of the measurement set (1-to-1 relation)
-  product_id       Float // ID of the product being ordered (no relation defined, type mismatch)
-  status           Float // Order status code (should possibly be an enum)
-  delivery_price   Float // Shipping/delivery cost
-  total_price      Float // Total order cost including product and delivery
-  delivery_address Float // Delivery address (note: should probably be a String)
-  delivery_date    DateTime    @default(now()) // Expected delivery date
-  order_date       DateTime    @default(now()) // Date when order was placed
-  createdAt        DateTime    @default(now()) // Timestamp when order was created in system
-  updatedAt        DateTime    @default(now()) // Timestamp when order was last updated
+  id              String      @id @default(uuid()) // Unique identifier for the order
+  user_id         String
+  user            User        @relation(fields: [user_id], references: [id]) // One to many relationship
+  measurement     Measurement @relation(fields: [measurement_id], references: [id]) 
+  measurement_id  String      @unique() // ID of the measurement set (1-to-1 relation)
+  product_id      String      @unique()
+  product         Product     @relation(fields: [product_id], references: [id])
+  status          Float
+  deliveryPrice   Float
+  totalPrice      Float
+  deliveryAddress Float
+  deliveryDate    DateTime    @default(now())
+  orderDate       DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
 }
 
 // Fabric model: Represents fabric materials available for clothing
 model Fabric {
   id          String       @id @default(uuid()) // Unique identifier for the fabric
-  createdAt   DateTime     @default(now()) // Timestamp when fabric was added
-  updatedAt   DateTime     @updatedAt // Timestamp when fabric was last updated
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   fabricTypes FabricType[] // Types/variations of this fabric
+  Product     Product[]
 }
 
 // FabricType model: Represents specific variations of a fabric
 model FabricType {
-  id        String   @id @default(uuid()) // Unique identifier for the fabric type
-  fabric_id String // ID of the parent fabric
+  id        String   @id @default(uuid())
+  fabric_id String
   fabric    Fabric   @relation(fields: [fabric_id], references: [id]) // Reference to parent fabric
-  createdAt DateTime @default(now()) // Timestamp when fabric type was added
-  updatedAt DateTime @updatedAt // Timestamp when fabric type was last updated
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Review model: User reviews for products
 model Review {
   id         String   @id @default(uuid()) // Unique identifier for the review
-  user_id    String   @unique // ID of user who wrote the review (unique constraint may be incorrect)
+  user_id    String   @unique
   user       User     @relation(fields: [user_id], references: [id]) // Reference to the user
-  rating     Float // Numerical rating (e.g., 1-5 stars)
-  comment    String // Text of the review
-  product_id String // ID of the reviewed product
+  rating     Float
+  comment    String
+  product_id String
   product    Product  @relation(fields: [product_id], references: [id]) // Reference to the product
-  createdAt  DateTime @default(now()) // Timestamp when review was created
-  updatedAt  DateTime @updatedAt // Timestamp when review was last updated
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 // Media model: Stores images and videos for products and users
 model Media {
   id         String   @id @default(uuid()) // Unique identifier for the media item
-  product_id String // ID of the associated product
-  product    Product  @relation(fields: [product_id], references: [id]) // Reference to the product
-  user_id    String // ID of the user who uploaded the media
+  product_id String
+  product    Product  @relation(fields: [product_id], references: [id])
+  user_id    String
   user       User     @relation(fields: [user_id], references: [id]) // Reference to the user
-  url        String // URL where the media is stored
-  type       Type // Type of media: IMAGE or VIDEO
-  createdAt  DateTime @default(now()) // Timestamp when media was uploaded
-  updatedAt  DateTime @updatedAt // Timestamp when media was last updated
+  url        String
+  type       Type
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 // Role enum: Defines possible user roles in the system
@@ -132,6 +140,6 @@ enum Role {
 
 // Type enum: Defines possible media types
 enum Type {
-  IMAGE // Static image files
-  VIDEO // Video content
+  IMAGE
+  VIDEO
 }
