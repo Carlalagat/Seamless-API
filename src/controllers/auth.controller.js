@@ -8,6 +8,9 @@ module.exports.login_get = (req,res)=>{
 
 
 module.exports.signup_post = (req,res)=>{
+    console.log('====================================');
+    console.log(req.body);
+    console.log('====================================');
     res.send("new sign up")
 }
 
