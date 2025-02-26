@@ -11,7 +11,8 @@
     "prisma:migrate": "prisma migrate dev",
     "test": "jest",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "seed": "node prisma/seed.js"
   },
   "repository": {
     "type": "git",
