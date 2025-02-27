@@ -2,7 +2,7 @@ const FABRIC_TYPE = {
     COTTON: 'cotton',
     SILK: 'silk',
     WOOL: 'wool',
-    POLYSTER: 'polysterm',
+    POLYSTER: 'polyster',
     LINEN: 'linen'
 };
 
