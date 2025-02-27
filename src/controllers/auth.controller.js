@@ -12,6 +12,7 @@ const handleErrors=(error)=>{
         })
     }
     
+    return errors;
 
 }
 
@@ -25,9 +26,6 @@ module.exports.login_get = (req,res)=>{
 
 
 module.exports.signup_post = async(req,res)=>{
-    // console.log('====================================');
-    // console.log(req.body);
-    // console.log('====================================');
      const {name , password } =req.body;
     try {
         // create user in the databse
@@ -36,7 +34,7 @@ module.exports.signup_post = async(req,res)=>{
     } catch (error) {
         const errors = handleErrors(error);
         console.log(error);
-        res.status(400).send("error occured")
+        res.status(400).json({errors})
         
     }
     res.send("new sign up")
