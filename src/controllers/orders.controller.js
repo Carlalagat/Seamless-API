@@ -1,6 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
- 
+
 const getOrders = async (req, res) => {
   try {
     const Orders = await prisma.Order.findMany();
