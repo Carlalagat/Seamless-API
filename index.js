@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+
+// import auth routes 
+const authRoutes = require("./src/routes/auth.routes");
 // const Product = require("./models/product.model.js");
 const productRoute = require("./src/routes/product.route");
 const app = express();
@@ -7,6 +10,9 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// register the auth route to the app 
+app.use(authRoutes)
 
 // routes
 app.use("/api/products", productRoute);
