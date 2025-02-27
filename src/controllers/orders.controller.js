@@ -6,7 +6,7 @@ const getOrders = async (req, res) => {
     const Orders = await prisma.Order.findMany();
     res.status(200).json(Orders);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -23,7 +23,7 @@ const getOrderById = async (req, res) => {
 
     res.status(200).json(Order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
     });
     res.status(201).json(Order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -47,7 +47,7 @@ const updateOrder = async (req, res) => {
     });
     res.status(200).json(Order);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -59,7 +59,7 @@ const deleteOrder = async (req, res) => {
     });
     res.status(200).json({ message: 'Order deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
