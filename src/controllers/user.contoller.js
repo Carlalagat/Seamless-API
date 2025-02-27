@@ -11,10 +11,11 @@ exports.getAllUsers = async (req, res, next) => {
   }
 };
 
-// exports.getUsersById = async (req, res, next) => {
+// exports.updateUsersById = async (req, res, next) => {
 //   try {
-//     const users = await userService.getUsersById();
-//     res.json(users);
+//     console.log('Received ID:', req.params.id);
+//     const user = await userService.deleteUsersById(req.params.id);
+//     res.json({ message: 'User updated successfully', user });
 //   } catch (error) {
 //     next(error);
 //   }
