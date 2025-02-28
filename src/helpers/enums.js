@@ -28,7 +28,7 @@ const MediaType = {
 
 module.exports = {
     UserRole,
-    OrderStatus,
+    ORDER_STATUS,
     FabricType,
     MediaType
 };
