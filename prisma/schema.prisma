@@ -23,7 +23,7 @@ model User {
   email       String       @unique
   password    String
   phoneNumber String
-  role        Role
+  role        Role 
   authToken   String       @default(uuid()) // Token for authentication sessions
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
