@@ -1,9 +1,11 @@
 <div align="center">
   
 # ✨ Seamless ✨
-/**
+
+<!--
 <img src="https://raw.githubusercontent.com/Carlalagat/Seamless-API/main/docs/assets/logo.png" alt="Seamless Logo" width="180" height="180" style="border-radius: 20px;">
-*/
+-->
+
 ### Tailor-Made Clothing Platform - Connecting clients with tailors for custom-made clothing through a user-friendly interface
 
 <p align="center">
