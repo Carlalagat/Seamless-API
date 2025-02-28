@@ -1,6 +1,8 @@
 const userService = require('../services/user.service');
 const { CreateUserDto } = require('../dto/user.dto');
-const { USER_ROLES } = require('../helpers/enums');
+
+
+const { USER_ROLES } = require('../helpers/user.enum');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -21,6 +23,7 @@ exports.getAllUsers = async (req, res, next) => {
 //   }
 // };
 
+
 exports.getUsersById = async (req, res, next) => {
   try {
     console.log('Received ID:', req.params.id);
@@ -36,6 +39,7 @@ exports.deleteUsersById = async (req, res, next) => {
     console.log('Received ID:', req.params.id);
     userService.deleteUsersById(req.params.id);
     res.json({ message: 'User deleted successfully' });
+
   } catch (error) {
     next(error);
   }
