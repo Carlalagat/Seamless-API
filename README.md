@@ -1,346 +1,319 @@
-# Seamless - Tailor-Made Clothing Platform 👔👗
+<div align="center">
+  
+# ✨ Seamless ✨
 
-Welcome to the Seamless project! This platform connects clients with tailors for custom-made clothing through a user-friendly interface. This guide will walk you through everything you need to know to get started, even if you've never used Git, GitHub, or any of our technical tools before.
+<img src="https://raw.githubusercontent.com/Carlalagat/Seamless-API/main/docs/assets/logo.png" alt="Seamless Logo" width="180" height="180" style="border-radius: 20px;">
 
-## 📋 Table of Contents
+### Tailor-Made Clothing Platform - Connecting clients with tailors for custom-made clothing through a user-friendly interface
 
-- [Project Overview](#project-overview)
-- [Getting Started From Zero](#getting-started-from-zero)
-  - [Setting Up Your Computer](#setting-up-your-computer)
-  - [Understanding Git and GitHub](#understanding-git-and-github)
-  - [Cloning the Project](#cloning-the-project)
-  - [Project Setup](#project-setup)
-- [Daily Workflow](#daily-workflow)
-  - [Branches Explained](#branches-explained)
-  - [Creating and Switching Branches](#creating-and-switching-branches)
-  - [Making Changes](#making-changes)
-  - [Committing and Pushing Changes](#committing-and-pushing-changes)
-  - [Creating Pull Requests](#creating-pull-requests)
-- [Testing Your Code](#testing-your-code)
-  - [Using Postman](#using-postman)
-  - [Uploading Files to Cloudinary](#uploading-files-to-cloudinary)
-- [Understanding Our Code](#understanding-our-code)
-  - [Folder Structure](#folder-structure)
-  - [Key Technologies](#key-technologies)
-- [Troubleshooting](#troubleshooting)
-- [Contact and Support](#contact-and-support)
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen" alt="Status: Active">
+  <img src="https://img.shields.io/badge/Version-1.0-blue" alt="Version: 1.0">
+  <img src="https://img.shields.io/badge/License-MIT-purple" alt="License: MIT">
+</p>
 
-## 🚀 Project Overview
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-daily-workflow">Daily Workflow</a> •
+  <a href="#-testing">Testing</a> •
+  <a href="#-code-structure">Code Structure</a> •
+  <a href="#-troubleshooting">Troubleshooting</a> •
+  <a href="#-contact">Contact</a>
+</p>
+
+</div>
+
+## 🌟 Stargazers
+[![Stargazers](https://reporoster.com/stars/Carlalagat/Seamless-API)](https://github.com/Carlalagat/Seamless-API/stargazers)
+
+## 📊 Contributions Dashboard
+![Alt](https://repobeats.axiom.co/api/embed/059ee957f87e835cc3365e2db35beade18e5eb7e.svg "Repobeats analytics image")
+
+## ✨ Project Overview
 
 Seamless is an innovative web application designed to transform the custom tailoring industry by enabling clients to access tailor-made clothing remotely.
 
-For customers, Seamless allows:
-- Requesting custom-tailored garments
-- Submitting accurate self-measurements using instructional videos
-- Selecting tailors based on skills and pricing
-- Tracking orders from creation to delivery
+<div style="display: flex; justify-content: space-between; margin: 20px 0; gap: 40px;">
+  <div style="width: 48%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 20px; border-radius: 12px; color: white;">
+    <h3>👗 For Customers</h3>
+    <ul>
+      <li>Request custom-tailored garments</li>
+      <li>Submit accurate self-measurements using instructional videos</li>
+      <li>Select tailors based on skills and pricing</li>
+      <li>Track orders from creation to delivery</li>
+    </ul>
+  </div>
+  <div style="width: 48%; background: linear-gradient(135deg, #ec4899, #f43f5e); padding: 20px; border-radius: 12px; color: white;">
+    <h3>👗 For Tailors</h3>
+    <ul>
+      <li>Access a broader customer base</li>
+      <li>Order management tools</li>
+      <li>Communication channels with clients</li>
+      <li>Portfolio showcase for attracting customers</li>
+    </ul>
+  </div>
+</div>
 
-For tailors, Seamless provides:
-- Access to a broader customer base
-- Order management tools
-- Communication channels with clients
+## 🚀 Getting Started
 
-## 🏁 Getting Started From Zero
+### Required Tools
 
-### Setting Up Your Computer
+Before diving into the Seamless project, you'll need to set up your development environment:
 
-Before you can work on the Seamless project, you need to install some essential tools:
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin: 20px 0;">
+  <div style="width: 100%; background-color: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+    <h3 style="color: #38bdf8;">🔄 Install Git</h3>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; margin-top: 10px;">
+      <p style="color: #94a3b8; margin: 0;">Windows:</p>
+      <code style="color: #38bdf8;">
+        # Download from git-scm.com<br>
+        git --version
+      </code>
+    </div>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; margin-top: 10px;">
+      <p style="color: #94a3b8; margin: 0;">macOS:</p>
+      <code style="color: #38bdf8;">
+        brew install git<br>
+        git --version
+      </code>
+    </div>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; margin-top: 10px;">
+      <p style="color: #94a3b8; margin: 0;">Linux:</p>
+      <code style="color: #38bdf8;">
+        sudo apt install git<br>
+        git --version
+      </code>
+    </div>
+  </div>
+  
+  <div style="width: 100%; background-color: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+    <h3 style="color: #4ade80;">📦 Install Node.js</h3>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px; margin-top: 10px;">
+      <p style="color: #94a3b8; margin: 0;">All Platforms:</p>
+      <code style="color: #4ade80;">
+        # Download LTS from nodejs.org<br>
+        node --version<br>
+        npm --version
+      </code>
+    </div>
+  </div>
+  
+  <div style="width: 100%; background-color: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+    <h3 style="color: #a78bfa;">🧰 Install Code Editor</h3>
+    <ul style="color: white; padding-left: 20px;">
+      <li>Download VS Code</li>
+      <li>Install extensions:
+        <ul>
+          <li>ESLint</li>
+          <li>Prettier</li>
+          <li>GitLens</li>
+          <li>JavaScript snippets</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
 
-#### 1. Install Git
+### Understanding Git & GitHub
 
-Git is a version control system that helps us track changes to our code and collaborate with others.
-
-**For Windows:**
-1. Download Git from [git-scm.com](https://git-scm.com/download/win)
-2. Run the installer, using the default options
-3. Verify installation by opening Command Prompt and typing:
-   ```
-   git --version
-   ```
-
-**For macOS:**
-1. If you have Homebrew, run:
-   ```
-   brew install git
-   ```
-   Otherwise, download from [git-scm.com](https://git-scm.com/download/mac)
-2. Verify installation by opening Terminal and typing:
-   ```
-   git --version
-   ```
-
-**For Linux:**
-1. For Ubuntu/Debian:
-   ```
-   sudo apt update
-   sudo apt install git
-   ```
-2. For Fedora:
-   ```
-   sudo dnf install git
-   ```
-3. Verify installation:
-   ```
-   git --version
-   ```
-
-#### 2. Install Node.js and npm
-
-Node.js is the environment that runs our JavaScript code, and npm (Node Package Manager) helps us install and manage libraries.
-
-1. Download Node.js from [nodejs.org](https://nodejs.org/) (choose the LTS version)
-2. Run the installer with default options
-3. Verify installation by opening Command Prompt/Terminal and typing:
-   ```
-   node --version
-   npm --version
-   ```
-
-#### 3. Install a Code Editor
-
-We recommend Visual Studio Code:
-1. Download from [code.visualstudio.com](https://code.visualstudio.com/)
-2. Run the installer with default options
-3. Helpful extensions to install:
-   - ESLint
-   - Prettier
-   - JavaScript (ES6) code snippets
-   - GitLens
-
-### Understanding Git and GitHub
-
-**What is Git?** Git is a tool that tracks changes to our code over time. It allows multiple people to work on the same project without overwriting each other's work.
-
-**What is GitHub?** GitHub is a website that hosts Git repositories (projects) in the cloud, making it easy to share and collaborate on code.
-
-**Key Concepts:**
-- **Repository (Repo)**: A project folder tracked by Git
-- **Clone**: Making a local copy of a repository on your computer
-- **Branch**: A separate version of the code for working on specific features
-- **Commit**: Saving your changes to the local repository
-- **Push**: Uploading your commits to GitHub
-- **Pull**: Downloading changes from GitHub to your computer
-- **Pull Request (PR)**: Asking to merge your changes into the main project
+<div style="background-color: #0f172a; padding: 20px; border-radius: 12px; margin: 20px 0;">
+  <h3 style="color: #f472b6; margin-top: 0;">🌿 Key Git Concepts</h3>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">📁 Repository</p>
+      <p style="color: #d1d5db; margin-top: 0;">Your project's home on GitHub</p>
+    </div>
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">📥 Clone</p>
+      <p style="color: #d1d5db; margin-top: 0;">Creating a local copy on your computer</p>
+    </div>
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">🌿 Branch</p>
+      <p style="color: #d1d5db; margin-top: 0;">A separate version for feature development</p>
+    </div>
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">💾 Commit</p>
+      <p style="color: #d1d5db; margin-top: 0;">Saving your changes locally</p>
+    </div>
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">📤 Push</p>
+      <p style="color: #d1d5db; margin-top: 0;">Uploading your commits to GitHub</p>
+    </div>
+    <div style="width: 48%; margin-bottom: 10px;">
+      <p style="color: #e879f9; margin-bottom: 5px;">📥 Pull</p>
+      <p style="color: #d1d5db; margin-top: 0;">Downloading changes from GitHub</p>
+    </div>
+  </div>
+</div>
 
 ### Cloning the Project
 
-1. Create a GitHub account at [github.com](https://github.com) if you don't have one
-2. Ask the project administrator to add you as a collaborator to the Seamless repository
-3. Go to the repository page (link will be provided by your team lead)
-4. Click the green "Code" button and copy the HTTPS URL
-   ![Clone URL](https://via.placeholder.com/400x200?text=GitHub+Clone+Button)
-5. Open Command Prompt/Terminal
-6. Navigate to where you want to store the project:
-   ```
-   cd Documents
-   mkdir Projects
-   cd Projects
-   ```
-7. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/seamless-api.git
-   ```
-8. Enter your GitHub username and password if prompted
-9. Move into the project folder:
-   ```
-   cd seamless-api
-   ```
+```bash
+# 1. Create a GitHub account at github.com
+# 2. Get added as a collaborator by your team lead
+# 3. Clone the repository:
+git clone https://github.com/Carlalagat/Seamless-API.git
+cd Seamless-API
+```
 
 ### Project Setup
 
-Now that you have the code on your computer, let's set it up:
-
-#### 1. Install Project Dependencies
-
-```
-npm install
-```
-
-This command reads the `package.json` file and installs all the libraries our project needs. It might take a few minutes.
-
-#### 2. Set Up Environment Variables
-
-1. Look for a file called `.env.example` in the project
-2. Create a new file called `.env` in the same location
-3. Copy the contents from `.env.example` to `.env`
-4. Ask your team lead for the actual values to put in this file (database credentials, API keys, etc.)
-
-#### 3. Set Up the Database
-
-Our project uses PostgreSQL with Prisma to manage the database:
-
-1. Make sure PostgreSQL is installed on your computer or you have access to a PostgreSQL database
-2. Update the `DATABASE_URL` in your `.env` file 
-3. Run database migrations to create the necessary tables:
-   ```
-   npm run prisma:generate
-   ```
-   ```
-   npm run prisma:migrate
-   ```
-4. Seed the database with initial data:
-   ```
-   npm run prisma:seed
-   ```
-
-#### 4. Start the Development Server
-
-```
-npm run dev
-```
-
-This command starts the server at `http://localhost:3000` (or the port specified in your `.env` file). You should see a message like "Server running on port 3000".
+<div style="background: linear-gradient(135deg, #1e293b, #0f172a); padding: 25px; border-radius: 12px; margin: 20px 0;">
+  <h3 style="color: #60a5fa; margin-top: 0;">⚙️ Quick Setup Steps</h3>
+  
+  <div style="margin: 15px 0;">
+    <p style="color: #93c5fd; margin-bottom: 5px;">1️⃣ Install Dependencies</p>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px;">
+      <code style="color: #38bdf8;">npm install</code>
+    </div>
+  </div>
+  
+  <div style="margin: 15px 0;">
+    <p style="color: #93c5fd; margin-bottom: 5px;">2️⃣ Configure Environment</p>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px;">
+      <code style="color: #38bdf8;">cp .env.example .env</code>
+    </div>
+  </div>
+  
+  <div style="margin: 15px 0;">
+    <p style="color: #93c5fd; margin-bottom: 5px;">3️⃣ Set Up Database</p>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px;">
+      <code style="color: #38bdf8;">
+        npm run prisma:generate<br>
+        npm run prisma:migrate<br>
+        npm run prisma:seed
+      </code>
+    </div>
+  </div>
+  
+  <div style="margin: 15px 0;">
+    <p style="color: #93c5fd; margin-bottom: 5px;">4️⃣ Start Development Server</p>
+    <div style="background-color: #0f172a; padding: 10px; border-radius: 6px;">
+      <code style="color: #38bdf8;">npm run dev</code>
+    </div>
+    <p style="color: #94a3b8; margin-top: 5px;">Server will start at http://localhost:3000</p>
+  </div>
+</div>
 
 ## 📅 Daily Workflow
 
-### Branches Explained
+### 🌿 Branch Management
 
-Think of branches like separate working areas for different features or changes:
+<div style="display: flex; justify-content: space-between; margin: 15px; gap: 10px;">
+  <div style="background-color: #238636; color: white; padding: 10px; border-radius: 5px; width: 30%;">
+    <strong>main</strong><br>Production-ready code
+  </div>
+  <div style="background-color: #8957e5; color: white; padding: 10px; border-radius: 5px; width: 30%;">
+    <strong>develop</strong><br>Integration branch
+  </div>
+</div>
 
-- **main**: The production-ready code that is live on our servers
-- **develop**: The integration branch where features come together before release
-- **feature branches**: Where individual features are developed before merging to develop
+### Creating & Working with Branches
 
-**Why we use branches:**
-- They prevent multiple developers from interfering with each other's work
-- They keep unstable code away from our production environment
-- They make it easier to track what changes are related to which feature
+<div style="background-color: #0d1117; padding: 20px; border-radius: 12px; margin: 20px 0;">
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Start from develop branch</p>
+    <div style="background-color: #161b22; padding: 10px; border-radius: 6px;">
+      <code style="color: #ff7b72;">git checkout develop</code>
+    </div>
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Get latest changes</p>
+    <div style="background-color: #161b22; padding: 10px; border-radius: 6px;">
+      <code style="color: #ff7b72;">
+        git fetch<br>
+        git pull origin develop
+      </code>
+    </div>
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Make your changes...</p>
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Check what files you've changed</p>
+    <div style="background-color: #161b22; padding: 10px; border-radius: 6px;">
+      <code style="color: #ff7b72;">git status</code>
+    </div>
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Stage and commit your changes</p>
+    <div style="background-color: #161b22; padding: 10px; border-radius: 6px;">
+      <code style="color: #ff7b72;">
+        git add .<br>
+        git commit -m "Add user registration form and validation"
+      </code>
+    </div>
+  </div>
+  
+  <div style="margin-bottom: 15px;">
+    <p style="color: #8b949e; margin-bottom: 5px;">Push your changes</p>
+    <div style="background-color: #161b22; padding: 10px; border-radius: 6px;">
+      <code style="color: #ff7b72;">git push -u origin develop</code>
+    </div>
+  </div>
+</div>
 
-### Creating and Switching Branches
+### Pull Request Process
 
-**IMPORTANT:** Always create feature branches from the `develop` branch, not from `main`.
+<div style="background: linear-gradient(135deg, #8957e5, #d2a8ff); padding: 20px; border-radius: 12px; margin: 20px 0; color: white;">
+  <h3 style="margin-top: 0;">🔄 Creating a Pull Request</h3>
+  <ol style="padding-left: 20px;">
+    <li>Go to the repository on GitHub</li>
+    <li>Click "Pull requests" → "New pull request"</li>
+    <li>Set "base" to <code style="background-color: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 3px;">develop</code> and "compare" to your feature branch</li>
+    <li>Add a title and description</li>
+    <li>Assign reviewers from your team</li>
+    <li>Submit the pull request</li>
+  </ol>
+</div>
 
-#### Step 1: Make sure you're on the develop branch
-
-```
-git checkout develop
-```
-
-This command switches you to the develop branch.
-
-#### Step 2: Get the latest changes
-
-Before creating a new branch, always get the latest code:
-
-```
-git fetch
-git pull origin main
-```
-
-**Why this is important:** 
-- `git fetch` checks for any changes on GitHub
-- `git pull origin main` downloads those changes to your computer
-- Doing this daily prevents conflicts and ensures you're working with the latest code
-
-### Making Changes
-
-Now you can make changes to the code using your code editor (like VS Code).
-
-### Committing and Pushing Changes
-
-After you've made some changes and tested that they work:
-
-#### Step 1: Check what files you've changed
-
-```
-git status
-```
-
-This shows which files have been modified.
-
-#### Step 2: Add your changes to staging
-
-```
-git add .
-```
-
-The `.` means "add all changed files". If you only want to add specific files, replace `.` with the file path.
-
-#### Step 3: Commit your changes
-
-```
-git commit -m "Add user registration form and validation"
-```
-
-Replace the message with a brief description of what you did. Always use present tense ("Add" not "Added").
-
-#### Step 4: Push your changes to GitHub
-
-```
-git push -u origin develop
-```
-
-Replace "develop" with your branch name. The `-u` flag sets up tracking, and you only need it the first time you push a new branch.
-
-For subsequent pushes, you can simply use:
-
-```
-git push
-```
-
-### Creating Pull Requests
-
-Once your feature is complete and pushed to GitHub:
-
-1. Go to the repository page on GitHub
-2. Click on "Pull requests"
-3. Click the green "New pull request" button
-4. Set "base" to `main` and "compare" to your `develop` branch
-5. Click "Create pull request"
-6. Add a title and description explaining what your changes do
-7. Assign a reviewer from the team
-8. Click "Create pull request"
-
-Your team members will review your code and either approve it or request changes. Once approved, your code will be merged into the `develop` branch.
-
-## 🧪 Testing Your Code
+## 🧪 Testing
 
 ### Using Postman
 
-Postman is a tool for testing APIs like ours. Here's how to use it:
+<div style="background-color: #1a1a1a; padding: 20px; border-radius: 12px; margin: 20px 0;">
+  <h3 style="color: #ff6c37; margin-top: 0;">🔍 Postman API Testing</h3>
+  
+  <p style="color: #d1d5db;">Postman is essential for testing our API endpoints:</p>
+  
+  <ol style="color: #d1d5db; padding-left: 20px;">
+    <li>Download from <a href="https://www.postman.com/downloads/" style="color: #ff6c37; text-decoration: none;">postman.com</a></li>
+    <li>Create requests for our endpoints:</li>
+  </ol>
+  
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 15px;">
+    <div style="width: 48%; background-color: #2e2e2e; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+      <p style="color: #10b981; margin: 0;">GET /api/products</p>
+      <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 0.9em;">Get all products</p>
+    </div>
+    <div style="width: 48%; background-color: #2e2e2e; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+      <p style="color: #f59e0b; margin: 0;">POST /api/products</p>
+      <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 0.9em;">Create a product</p>
+    </div>
+    <div style="width: 48%; background-color: #2e2e2e; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+      <p style="color: #10b981; margin: 0;">GET /api/products/:id</p>
+      <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 0.9em;">Get one product</p>
+    </div>
+    <div style="width: 48%; background-color: #2e2e2e; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+      <p style="color: #3b82f6; margin: 0;">PUT /api/products/:id</p>
+      <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 0.9em;">Update a product</p>
+    </div>
+    <div style="width: 48%; background-color: #2e2e2e; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+      <p style="color: #ef4444; margin: 0;">DELETE /api/products/:id</p>
+      <p style="color: #94a3b8; margin: 5px 0 0 0; font-size: 0.9em;">Delete a product</p>
+    </div>
+  </div>
+</div>
 
-1. Download and install Postman from [postman.com](https://www.postman.com/downloads/)
-2. Open Postman and create a new request
-3. Set the HTTP method (GET, POST, PUT, DELETE)
-4. Enter the URL (e.g., `http://localhost:3000/api/products`)
-5. For POST or PUT requests, go to the "Body" tab:
-   - Select "raw" and then "JSON"
-   - Enter your data in JSON format:
-     ```json
-     {
-       "name": "Custom Suit",
-       "price": 199.99,
-       "description": "Tailored wool suit"
-     }
-     ```
-6. Click "Send" to make the request
-7. View the response below
-
-**Common API endpoints in our project:**
-- `GET /api/products`: Get all products
-- `POST /api/products`: Create a new product
-- `GET /api/products/:id`: Get a specific product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
-
-### Uploading Files to Cloudinary
-
-Our project uses Cloudinary to store images. Here's how to upload files:
-
-#### Using Postman:
-
-1. Create a new POST request to `http://localhost:3000/api/upload`
-2. Go to the "Body" tab
-3. Select "form-data"
-4. Add a key named "image" and change the type from "Text" to "File"
-5. Click "Select Files" and choose your image
-6. Click "Send"
-7. The response will include the Cloudinary URL to use in your application
-
-#### In Code:
+### File Uploads with Cloudinary
 
 ```javascript
-// Example code for uploading an image to Cloudinary
+// Example code for uploading images
 const cloudinary = require('../helpers/cloudinary');
 
 async function uploadImage(imagePath) {
@@ -354,105 +327,116 @@ async function uploadImage(imagePath) {
 }
 ```
 
-## 🧩 Understanding Our Code
+## 🧩 Code Structure
 
-### Folder Structure
-
-```
-seamless-api/
+<div style="background-color: #0d1117; padding: 20px; border-radius: 12px; margin: 20px 0; color: #e6edf3;">
+  <pre style="margin: 0; overflow-x: auto;">
+Seamless-API/
 ├── prisma/                  // Database configuration
 │   ├── schema.prisma        // Database schema
 │   └── seed/
 │       └── seed.js          // Initial data seeding
 ├── src/
 │   ├── controllers/         // Business logic
-│   │   └── product.controller.js
 │   ├── dto/                 // Data validation
-│   │   └── product.dto.js
 │   ├── helpers/             // Utility functions
-│   │   └── enums.js
 │   ├── routes/              // API endpoints
-│   │   └── product.route.js
 │   └── index.js             // Entry point
 ├── tests/                   // Automated tests
-│   └── product.test.js
 ├── docs/                    // Documentation
-│   └── architecture.md
 ├── .env                     // Environment variables
-├── package.json             // Dependencies
-└── README.md                // This file
-```
-
-**What each folder does:**
-
-- **prisma/**: Contains database schema and initialization code
-  - **schema.prisma**: Defines database tables and relationships
-  - **seed.js**: Creates initial data for testing
-
-- **src/**: Contains the main application code
-  - **controllers/**: Implements business logic and handles requests
-  - **dto/**: (Data Transfer Objects) Validates and structures request/response data
-  - **helpers/**: Contains utility functions and constants
-  - **routes/**: Defines API endpoints and connects them to controllers
-
-- **tests/**: Contains automated tests to verify code works correctly
+└── README.md                // Project overview
+  </pre>
+</div>
 
 ### Key Technologies
 
-Our project uses several technologies you should understand:
-
-1. **Express**: A framework for building web APIs with Node.js
-   - Creates routes to handle HTTP requests (GET, POST, etc.)
-   - Example: `app.get('/products', productController.getAllProducts);`
-
-2. **Prisma**: An ORM (Object-Relational Mapping) for database access
-   - Converts JavaScript code to database queries
-   - Example: `prisma.product.findMany()` gets all products from the database
-
-3. **JWT (JSON Web Tokens)**: For user authentication
-   - Example: `const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);`
-
-4. **Cloudinary**: For storing and serving images
-   - Example: `cloudinary.uploader.upload(req.file.path)`
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin: 20px 0;">
+  <div style="width: 18%; background-color: #13795b; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+    <h3 style="color: white; margin-top: 0;">Express</h3>
+    <p style="color: #d1fae5; margin-bottom: 0;">Web API framework</p>
+  </div>
+  <div style="width: 18%; background-color: #4f46e5; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+    <h3 style="color: white; margin-top: 0;">Prisma</h3>
+    <p style="color: #e0e7ff; margin-bottom: 0;">ORM for database</p>
+  </div>
+  <div style="width: 18%; background-color: #b45309; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+    <h3 style="color: white; margin-top: 0;">JWT</h3>
+    <p style="color: #fef3c7; margin-bottom: 0;">Authentication</p>
+  </div>
+  <div style="width: 18%; background-color: #0284c7; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+    <h3 style="color: white; margin-top: 0;">Cloudinary</h3>
+    <p style="color: #e0f2fe; margin-bottom: 0;">Image storage</p>
+  </div>
+  <div style="width: 18%; background-color: #4338ca; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px;">
+    <h3 style="color: white; margin-top: 0;">PostgreSQL</h3>
+    <p style="color: #e0e7ff; margin-bottom: 0;">Database</p>
+  </div>
+</div>
 
 ## 🛠️ Troubleshooting
 
-**Problem: "Error: Cannot find module 'xyz'"**
-- Solution: Run `npm install` to make sure all dependencies are installed
-
-**Problem: "Error: Database connection failed"**
-- Solution: Check your `.env` file to ensure DATABASE_URL is correct
-
-**Problem: "Error: Git pull failed"**
-- Solution: Make sure you've committed your local changes first with `git commit`
-
-**Problem: "Error: Push rejected"**
-- Solution: Pull the latest changes with `git pull` before pushing again
-
-**Problem: "Prisma migration failed"**
-- Solution: Check the error message for details or ask a team member for help
+<div style="background-color: #161b22; padding: 20px; border-radius: 12px; margin: 20px 0; overflow-x: auto;">
+  <table style="width: 100%; border-collapse: collapse; color: #e6edf3;">
+    <thead>
+      <tr style="background-color: #0d1117;">
+        <th style="padding: 10px; text-align: left; border-bottom: 1px solid #30363d;">Problem</th>
+        <th style="padding: 10px; text-align: left; border-bottom: 1px solid #30363d;">Solution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">"Cannot find module 'xyz'"</td>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">Run <code style="background-color: #2e2e2e; padding: 2px 5px; border-radius: 3px;">npm install</code> to install dependencies</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">"Database connection failed"</td>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">Check your <code style="background-color: #2e2e2e; padding: 2px 5px; border-radius: 3px;">.env</code> file and verify DATABASE_URL</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">"Git pull failed"</td>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">Commit local changes first with <code style="background-color: #2e2e2e; padding: 2px 5px; border-radius: 3px;">git commit</code></td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">"Push rejected"</td>
+        <td style="padding: 10px; border-bottom: 1px solid #30363d;">Pull latest changes with <code style="background-color: #2e2e2e; padding: 2px 5px; border-radius: 3px;">git pull</code> before pushing</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px;">Prisma migration failed"</td>
+        <td style="padding: 10px;">Check error details or ask a team member</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ## 📞 Contact and Support
 
-If you're stuck or have questions:
-
-1. Check this README and other documentation in the `docs/` folder
-2. Ask in our team Slack channel
-3. Contact the team lead or project manager
-4. For urgent issues, call the support hotline at +XXX-XXX-XXXX
-
----
-
-## 🎉 Final Tips for Success
-
-- **Pull latest changes every day** before you start working
-- **Create a new branch** for each feature or bug fix
-- **Write clear commit messages** so others understand your changes
-- **Test your code** before creating pull requests
-- **Ask questions** if you're unsure about anything
-
-We're excited to have you on the Seamless team! Together, we're transforming the custom tailoring industry. 🚀
+<div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 20px; border-radius: 12px; margin: 20px 0; color: white;">
+  <h3 style="margin-top: 0;">Need Help?</h3>
+  <ol style="padding-left: 20px;">
+    <li>Check this README and the <code style="background-color: rgba(0,0,0,0.2); padding: 2px 5px; border-radius: 3px;">docs/</code> folder</li>
+    <li>Ask in our team Google Chat Space</li>
+    <li>Contact the team lead or project manager</li>
+  </ol>
+</div>
 
 ---
 
-© 2025 Lish AI Labs - All Rights Reserved
+<div style="background: linear-gradient(135deg, #0ea5e9, #2dd4bf); padding: 25px; border-radius: 12px; margin: 20px 0; color: white; text-align: center;">
+  <h2 style="margin-top: 0;">🎉 Keys to Success</h2>
+  <ul style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">📥 <strong>Pull daily</strong> before starting work</li>
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">🌿 <strong>Create specific branches</strong> for each feature</li>
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">📝 <strong>Write clear commit messages</strong></li>
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">🧪 <strong>Test thoroughly</strong> before submitting PRs</li>
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">❓ <strong>Ask questions</strong> when needed</li>
+    <li style="width: 30%; margin-bottom: 15px; text-align: center;">🤝 <strong>Collaborate</strong> with your team members</li>
+  </ul>
+  <p>We're excited to have you on the Seamless team! Together, we're transforming the custom tailoring industry. 🚀</p>
+</div>
+
+---
+
+<div style="text-align: center; margin-top: 30px; color: #8b949e;">
+  © 2025 SeamLess - All Rights Reserved
+</div>
