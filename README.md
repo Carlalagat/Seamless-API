@@ -1,9 +1,9 @@
 <div align="center">
   
 # ✨ Seamless ✨
-
+/**
 <img src="https://raw.githubusercontent.com/Carlalagat/Seamless-API/main/docs/assets/logo.png" alt="Seamless Logo" width="180" height="180" style="border-radius: 20px;">
-
+*/
 ### Tailor-Made Clothing Platform - Connecting clients with tailors for custom-made clothing through a user-friendly interface
 
 <p align="center">
@@ -92,7 +92,7 @@ git --version
 
 ```bash
 # All Platforms:
-# Download LTS from nodejs.org
+# Download LTS from nodejs.org( https://nodejs.org/en )
 node --version
 npm --version
 ```
@@ -218,7 +218,7 @@ git push -u origin develop
 
 1. Go to the repository on GitHub
 2. Click "Pull requests" → "New pull request"
-3. Set "base" to `develop` and "compare" to your feature branch
+3. Set "base" to `main` and "compare" to `develop` branch
 4. Add a title and description
 5. Assign reviewers from your team
 6. Submit the pull request
