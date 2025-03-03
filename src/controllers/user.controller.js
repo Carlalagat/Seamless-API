@@ -2,7 +2,7 @@ const userService = require('../services/user.service');
 const { CreateUserDto } = require('../dto/user.dto');
 
 
-const { USER_ROLES } = require('../helpers/user.enum');
+const { USER_ROLES } = require('../helpers/enums');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
