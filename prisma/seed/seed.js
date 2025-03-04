@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
@@ -7,11 +8,13 @@ async function seed() {
 
     // 1. Create Admin User
     // Using plain text passwords instead of hashing for simplicity
+    const password = "Admin@Nakuru2025!"
+    const hashedPassword = await bcrypt.hash(password, 10);
     const adminUser = await prisma.user.create({
         data: {
             username: 'admin',
             email: 'admin@nakurutailors.co.ke',
-            password: 'Admin@Nakuru2025!', // Plain text password now
+            password: hashedPassword, // Plain text password now
             phoneNumber: '+254700123456',
             role: 'ADMIN',
             authToken: '38f1b3a0-6ab1-4568-a888-e88c7de3e365',
