@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const prisma = require("../config/prismaClient");
 require("dotenv").config();
 
-// const prisma = new PrismaClient();
 
 // Generate JWT Token
 const generateToken = (user) => {
