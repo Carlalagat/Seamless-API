@@ -24,10 +24,10 @@ exports.getAllUsers = async (req, res, next) => {
 // };
 
 
-exports.getUsersById = async (req, res, next) => {
+exports.getUserById = async (req, res, next) => {
   try {
     console.log('Received ID:', req.params.id);
-    const user = await userService.getUsersById(req.params.id);
+    const user = await userService.getUserById(req.params.id);
     res.json({ message: 'User retrieved successfully', user });
   } catch (error) {
     next(error);
