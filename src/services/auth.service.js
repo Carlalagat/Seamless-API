@@ -34,3 +34,18 @@ exports.signin = async ({ email, password }) => {
 
   return { user, token: generateToken(user) };
 };
+
+exports.reset_password = async (email) => {
+  if (!email || typeof email !== "string") {
+    throw new Error("Invalid user email");
+  }
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return await prisma.user.reset_password({
+    where: { email },
+  });
+};

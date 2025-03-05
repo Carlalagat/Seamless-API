@@ -7,8 +7,9 @@ const userController = require('../controllers/user.controller');
 // const { userSchema } = require('../dtos/user.dto'); // For example, using Joi
 
 router.get('/', userController.getAllUsers);
+router.get('/:id', userController.getUserById);
 router.delete('/:id', userController.deleteUsersById);
-// router.patch('/:id', userController.updateUsersById);
+//router.patch('/:id', userController.updateUsersById);
 router.post('/', userController.createUser);
 
 module.exports = router;
