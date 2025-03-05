@@ -11,6 +11,13 @@ const generateToken = (user) => {
   });
 };
 
+// Generate Refresh Token
+const generateRefreshToken = (user) => {
+  return jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, {
+    expiresIn: "7d", 
+  });
+};
+
 // Signup Service
 exports.signup = async ({ username, email, password, phoneNumber, role }) => {
   const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -20,8 +27,16 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
   const user = await prisma.user.create({
     data: { username, email, password: hashedPassword, phoneNumber, role },
   });
+  const accessToken = generateAccessToken(user); 
+  const refreshToken = generateRefreshToken(user);
+  await prisma.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: user.id,
+    },
+  });
 
-  return { user, token: generateToken(user) };
+  return { user,accessToken: accessToken,refreshToken: refreshToken};
 };
 
 // Signin Service
@@ -32,7 +47,17 @@ exports.signin = async ({ email, password }) => {
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw new Error("Invalid email or password");
 
-  return { user, token: generateToken(user) };
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user); 
+
+  
+  await prisma.refreshToken.upsert({ 
+    where: { userId: user.id },
+    update: { token: refreshToken },
+    create: { token: refreshToken, userId: user.id },
+  });
+
+  return { user, accessToken: accessToken,refreshToken:refreshToken};
 };
 
 exports.reset_password = async (email) => {
