@@ -1,5 +1,6 @@
 const authService = require("../services/auth.service");
 
+
 exports.signup = async (req, res) => {
   try {
     const data = req.body;
@@ -19,3 +20,15 @@ exports.signin = async (req, res) => {
     res.status(401).json({ error: error.message });
   }
 };
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+      const newPassword = await authService.resetPassword(data);
+      res.status(201).json(newPassword);
+    } catch (error) {
+      next(error);
+    }
+};
+
+
+

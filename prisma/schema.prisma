@@ -31,8 +31,20 @@ model User {
   reviews     Review[]
   Measurement Measurement?
   Order       Order[]
+  refreshTokens RefreshToken[]
 
   @@index([email]) // Index on email for faster queries
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique // The actual refresh token string
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 // Product model: Represents clothing items available for order
