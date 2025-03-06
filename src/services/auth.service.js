@@ -5,7 +5,7 @@ require("dotenv").config();
 
 
 // Generate JWT Token
-const generateToken = (user) => {
+const generateAccessToken = (user) => {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: "15m",
   });
@@ -13,7 +13,7 @@ const generateToken = (user) => {
 
 // Generate Refresh Token
 const generateRefreshToken = (user) => {
-  return jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, {
+  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: "7d", 
   });
 };
@@ -29,12 +29,12 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
   });
   const accessToken = generateAccessToken(user); 
   const refreshToken = generateRefreshToken(user);
-  await prisma.refreshToken.create({
-    data: {
-      token: refreshToken,
-      userId: user.id,
-    },
-  });
+  // await prisma.refreshToken.create({
+  //   data: {
+  //     token: refreshToken,
+  //     userId: user.id,
+  //   },
+  // });
 
   return { user,accessToken: accessToken,refreshToken: refreshToken};
 };
@@ -51,11 +51,11 @@ exports.signin = async ({ email, password }) => {
   const refreshToken = generateRefreshToken(user); 
 
   
-  await prisma.refreshToken.upsert({ 
-    where: { userId: user.id },
-    update: { token: refreshToken },
-    create: { token: refreshToken, userId: user.id },
-  });
+  // await prisma.refreshToken.upsert({ 
+  //   where: { userId: user.id },
+  //   update: { token: refreshToken },
+  //   create: { token: refreshToken, userId: user.id },
+  // });
 
   return { user, accessToken: accessToken,refreshToken:refreshToken};
 };

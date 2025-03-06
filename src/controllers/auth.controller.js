@@ -21,14 +21,14 @@ exports.signin = async (req, res) => {
   }
 };
 
-exports.resetPassword = async (req, res, next) => {
-  try {
-      const newPassword = await authService.resetPassword(data);
-      res.status(201).json(newPassword);
-    } catch (error) {
-      next(error);
-    }
-};
+// exports.resetPassword = async (req, res, next) => {
+//   try {
+//       const newPassword = await authService.resetPassword(data);
+//       res.status(201).json(newPassword);
+//     } catch (error) {
+//       next(error);
+//     }
+// };
 
 
 
