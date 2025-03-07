@@ -18,34 +18,28 @@ datasource db {
 
 // User model: Represents platform users (clients, tailors, admins)
 model User {
-  id          String       @id @default(uuid()) // Unique identifier for the user
-  username    String       @unique // Username for login, must be unique
-  email       String       @unique
-  password    String
-  phoneNumber String
-  role        Role 
-  authToken   String       @default(uuid()) // Token for authentication sessions
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  media       Media[]
-  reviews     Review[]
-  Measurement Measurement?
-  Order       Order[]
-  refreshTokens RefreshToken[]
+  id                   String       @id @default(uuid()) // Unique identifier for the user
+  username             String       @unique              // Username for login, must be unique
+  email                String       @unique
+  password             String
+  phoneNumber          String
+  role                 Role 
+  authToken            String       @default(uuid())     // Token for authentication sessions
+  verified             Boolean      @default(false)      // Indicates if the account has been verified
+  verificationToken    String?                           // Token used for account verification
+  resetPasswordToken   String?                           // Token used for resetting the password
+  resetPasswordExpires DateTime?                         // Expiry date for the reset password token
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  media                Media[]
+  reviews              Review[]
+  Measurement          Measurement?
+  Order                Order[]
 
   @@index([email]) // Index on email for faster queries
 }
 
-model RefreshToken {
-  id        String   @id @default(uuid())
-  token     String   @unique // The actual refresh token string
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  @@index([userId])
-}
 
 // Product model: Represents clothing items available for order
 model Product {
