@@ -306,7 +306,7 @@ async function seed() {
           status: getRandomFloat(10, 100),
           deliveryPrice: getRandomFloat(200, 500),
           totalPrice: product.price + getRandomFloat(200, 500),
-          deliveryAddress: "Section 58, Nakuru", // This should be a string, not a float - schema issue
+          deliveryAddress: 123 , // This should be a string, not a float - schema issue
           deliveryDate: getRandomFutureDate(),
           orderDate: getRandomPastDate(),
         },
