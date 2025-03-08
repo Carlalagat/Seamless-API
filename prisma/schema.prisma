@@ -86,7 +86,7 @@ model Order {
   status          Float
   deliveryPrice   Float
   totalPrice      Float
-  deliveryAddress Float
+  deliveryAddress String
   deliveryDate    DateTime    @default(now())
   orderDate       DateTime    @default(now())
   createdAt       DateTime    @default(now())
@@ -105,6 +105,7 @@ model Fabric {
 // FabricType model: Represents specific variations of a fabric
 model FabricType {
   id        String   @id @default(uuid())
+  name      String
   fabric_id String
   fabric    Fabric   @relation(fields: [fabric_id], references: [id], onDelete: Cascade) // Reference to parent fabric
   createdAt DateTime @default(now())
