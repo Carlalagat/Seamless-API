@@ -6,10 +6,10 @@ const userController = require('../controllers/user.controller');
 // const { validateBody } = require('../middlewares/validate.middleware');
 // const { userSchema } = require('../dtos/user.dto'); // For example, using Joi
 
+router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers);
 router.get('/:id', userController.getUserById);
+router.patch('/:id', userController.updateUsersById);
 router.delete('/:id', userController.deleteUsersById);
-//router.patch('/:id', userController.updateUsersById);
-router.post('/', userController.createUser);
 
 module.exports = router;
