@@ -1,4 +1,4 @@
-const productService = require('../services/product.service');
+const productService = require('../services/products.service');
 const { CreateProductDto, UpdateProductDto } = require('../dto/product.dto');
 
 exports.getAllProducts = async (req, res, next) => {

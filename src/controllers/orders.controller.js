@@ -1,7 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const orderService = require("../services/products.service");
+const { CreateOrderDto } = require("../dto/order.dto");
 
-const getOrders = async (req, res) => {
+const getAllOrders = async (req, res) => {
   try {
     const Orders = await prisma.Order.findMany();
     res.status(200).json(Orders);
@@ -18,7 +20,7 @@ const getOrderById = async (req, res) => {
     });
 
     if (!Order) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(404).json({ message: "Order not found" });
     }
 
     res.status(200).json(Order);
@@ -29,16 +31,17 @@ const getOrderById = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const Order = await prisma.Order.create({
-      data: req.body,
-    });
-    res.status(201).json(Order);
+    const orderData = new CreateOrderDto(req.body);
+    const newOrder = await orderService.createOrder(orderData);
+    res.status(201).json(newOrder);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(400)
+      .json({ message: "Order not created", error: error.message });
   }
 };
 
-const updateOrder = async (req, res) => {
+const updateOrderById = async (req, res) => {
   try {
     const { id } = req.params;
     const Order = await prisma.Order.update({
@@ -51,22 +54,22 @@ const updateOrder = async (req, res) => {
   }
 };
 
-const deleteOrder = async (req, res) => {
+const deleteOrderById = async (req, res) => {
   try {
     const { id } = req.params;
     await prisma.Order.delete({
       where: { id: Number(id) },
     });
-    res.status(200).json({ message: 'Order deleted successfully' });
+    res.status(200).json({ message: "Order deleted successfully" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
 module.exports = {
-  getOrders,
+  getAllOrders,
   getOrderById,
   createOrder,
-  updateOrder,
-  deleteOrder,
+  updateOrderById,
+  deleteOrderById,
 };
