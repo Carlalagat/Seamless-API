@@ -1,13 +1,17 @@
+const cloudinary = require('cloudinary').v2;
 import { v2 as cloudinary } from 'cloudinary';
 
 (async function() {
 
     // Configuration
     cloudinary.config({ 
-        cloud_name: 'dfexfxyt0', 
-        api_key: '394816657529531', 
-        api_secret: '<your_api_secret>' // Click 'View API Keys' above to copy your API secret
+        cloud_name: 'Seamless', 
+        secure: true,
+        api_key: process.env.CLOUDINARY_API_KEY, // Click 'View API Keys' above to copy your API key, 
+        api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
     });
+
+    // const image =''
     
     // Upload an image
      const uploadResult = await cloudinary.uploader
