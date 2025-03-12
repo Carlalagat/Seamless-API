@@ -10,6 +10,14 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
+exports.getProductById = async (req, res, next) => {
+  try {
+    const product = await productService.getProductById(req.params.id);
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.deleteProductById = async (req, res, next) => {
   try {
@@ -25,6 +33,7 @@ exports.deleteProductById = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
   try {
     const productData = new CreateProductDto(req.body);
+    
     const newProduct = await productService.createProduct(productData);
     res.status(201).json(newProduct);
   } catch (error) {
@@ -33,10 +42,13 @@ exports.createProduct = async (req, res, next) => {
 };
 
 
-exports.updateProduct = async (req, res, next) => {
+exports.updateProductById  = async (req, res, next) => {
   try {
     const productData = new UpdateProductDto(req.body);
-    const newProduct = await productService.updateProduct(productData);
+    const newProduct = await productService.updateProductById(
+      req.params.id,
+      productData);
+
     res.status(201).json(newProduct);
   } catch (error) {
     next(error);
