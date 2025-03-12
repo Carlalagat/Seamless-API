@@ -3,18 +3,47 @@ const prisma = require('../config/prismaClient');  // Import Prisma client
 /** CREATE MEASUREMENT */
 exports.createMeasurement = async (measurementData) => {
   try {
+    // Check if a measurement already exists for this user
+    const existingMeasurement = await prisma.measurement.findUnique({
+      where: { user_id: measurementData.user_id },
+    });
+
+    if (existingMeasurement) {
+      throw new Error('Measurement already exists for this user');
+    }
+
     return await prisma.measurement.create({
-      data: measurementData,  // Pass the measurement data to Prisma's create method
+      data: {
+        neck: measurementData.neck,
+        chest: measurementData.chest,
+        waist: measurementData.waist,
+        hips: measurementData.hips,
+        inseam: measurementData.inseam,
+        sleeve: measurementData.sleeve,
+        user: {
+          connect: { id: measurementData.user_id }
+        }
+      }
     });
   } catch (error) {
-    throw new Error('Error creating measurement: ' + error.message);
+    throw error;
   }
 };
 
 /** GET ALL MEASUREMENTS */
 exports.getAllMeasurements = async () => {
   try {
-    return await prisma.measurement.findMany();  // Fetch all measurements
+    return await prisma.measurement.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true
+          }
+        }
+      }
+    });  // Fetch all measurements with user details
   } catch (error) {
     throw new Error('Error fetching measurements: ' + error.message);
   }
@@ -29,6 +58,15 @@ exports.getMeasurementByUserId = async (userId) => {
   try {
     const measurement = await prisma.measurement.findUnique({
       where: { user_id: userId },  // Fetch measurement by user_id
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true
+          }
+        }
+      }
     });
 
     if (!measurement) {
@@ -48,9 +86,16 @@ exports.updateMeasurementByUserId = async (userId, measurementData) => {
   }
 
   try {
-    // Retrieve the existing measurement record
+    // Get defined fields only to prevent null updates
+    const definedData = measurementData.getDefinedFields ? 
+      measurementData.getDefinedFields() : 
+      Object.fromEntries(
+        Object.entries(measurementData).filter(([_, value]) => value !== undefined)
+      );
+      
+    // Check if measurement exists
     const measurement = await prisma.measurement.findUnique({
-      where: { user_id: userId },  // Fetch measurement by user_id
+      where: { user_id: userId },
     });
 
     if (!measurement) {
@@ -60,10 +105,19 @@ exports.updateMeasurementByUserId = async (userId, measurementData) => {
     // Perform the update operation
     return await prisma.measurement.update({
       where: { user_id: userId },
-      data: measurementData,
+      data: definedData,
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true
+          }
+        }
+      }
     });
   } catch (error) {
-    throw new Error('Error updating measurement: ' + error.message);
+    throw error; // Pass the original error for better debugging
   }
 };
 
@@ -76,7 +130,7 @@ exports.deleteMeasurementByUserId = async (userId) => {
   try {
     // Retrieve the existing measurement record
     const measurement = await prisma.measurement.findUnique({
-      where: { user_id: userId },  // Fetch measurement by user_id
+      where: { user_id: userId },
     });
 
     if (!measurement) {
@@ -88,6 +142,6 @@ exports.deleteMeasurementByUserId = async (userId) => {
       where: { user_id: userId },
     });
   } catch (error) {
-    throw new Error('Error deleting measurement: ' + error.message);
+    throw error; // Pass the original error for better debugging
   }
 };

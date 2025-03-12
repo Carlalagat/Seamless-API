@@ -4,11 +4,18 @@ const router = express.Router();
 // Import route files
 const authRoutes = require('./auth.routes');
 const userRoutes = require('./user.routes');
-const measurementRoutes = require('./measurement.routes');  // Import measurement routes
+const productRoutes = require('./products.routes');
+const orderRoutes = require('./order.routes');
+const fabricRoutes = require('./fabric.routes');
+const reviewRoutes = require('./review.routes');
+const measurementRoutes = require('./measurement.routes')
 
-// Define routes
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
-router.use('/api/measurements', measurementRoutes);  // Use measurement routes
+router.use('/products', productRoutes);
+router.use('/orders', orderRoutes);
+router.use('/fabric', fabricRoutes);
+router.use('/review', reviewRoutes);
+router.use('/measurement', measurementRoutes)
 
 module.exports = router;

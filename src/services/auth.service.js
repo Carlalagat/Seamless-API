@@ -64,12 +64,16 @@ exports.verifyAccount = async (token) => {
 };
 
 // Signin Service
-exports.signin = async ({ email, password }) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) throw new Error("Invalid email or password");
+exports.signin = async ({ identifier, password }) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email: identifier }, { username: identifier }],
+    },
+  });
+  if (!user) throw new Error("Invalid email or username");
 
   const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error("Invalid email or password");
+  if (!isMatch) throw new Error("Invalid  password");
 
   // Optionally check if the account is verified:
   if (!user.verified) {

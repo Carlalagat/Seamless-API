@@ -1,6 +1,19 @@
 {
   "name": "seamless-api",
   "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "keywords": [],
+  "homepage": "https://github.com/Carlalagat/Seamless-API#readme",
+  "bugs": {
+    "url": "https://github.com/Carlalagat/Seamless-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carlalagat/Seamless-API.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -14,18 +27,6 @@
     "format": "prettier --write .",
     "seed": "node prisma/seed/seed.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Carlalagat/Seamless-API.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Carlalagat/Seamless-API/issues"
-  },
-  "homepage": "https://github.com/Carlalagat/Seamless-API#readme",
-  "description": "",
   "dependencies": {
     "@prisma/client": "^6.4.1",
     "bcryptjs": "^3.0.2",
