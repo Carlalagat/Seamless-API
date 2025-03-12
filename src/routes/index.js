@@ -6,11 +6,13 @@ const userRoutes = require('./user.routes');
 const productRoutes = require('./products.routes');
 const orderRoutes = require('./order.routes');
 const fabricRoutes = require('./fabric.routes');
+const reviewRoutes = require('./review.routes');
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/products', productRoutes);
 router.use('/orders', orderRoutes);
 router.use('/fabric', fabricRoutes);
+router.use('/review', reviewRoutes);
 
 module.exports = router;
