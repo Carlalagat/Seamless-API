@@ -1,11 +1,10 @@
 const reviewService = require("../services/review.service");
-const { CreateReviewDto, UpdateReviewDto } = require("../dto/review.dto");
+
 
 
 exports.createReview = async (req, res, next) => {
   try {
-    const reviewData = new CreateReviewDto(req.body); // Pass the entire request body
-    const newReview = await reviewService.createReview(reviewData);
+    const newReview = await reviewService.createReview(req.body); 
     res.status(201).json(newReview);
   } catch (error) {
     next(error);
@@ -26,7 +25,7 @@ exports.getReviewById = async (req, res, next) => {
     const review = await reviewService.getReviewById(req.params.id);
 
     if (!review) {
-      return res.status(404).json({ message: "Review not found" }); // Handle case where review is not found
+      return res.status(404).json({ message: "Review not found" }); 
     }
 
     res.json({ message: "Review retrieved successfully", review });
@@ -37,14 +36,13 @@ exports.getReviewById = async (req, res, next) => {
 
 exports.updateReviewById = async (req, res, next) => {
   try {
-    const reviewData = new UpdateReviewDto(req.body);
-    const updatedReview = await reviewService.updateReviewById(
+    const updatedReview = await reviewService.updateReviewsById(
       req.params.id,
-      reviewData
+      req.body 
     );
 
     if (!updatedReview) {
-      return res.status(404).json({ message: "Review not found" }); // Handle case where review is not found
+      return res.status(404).json({ message: "Review not found" }); 
     }
 
     res.json({ message: "Review updated successfully", updatedReview });
