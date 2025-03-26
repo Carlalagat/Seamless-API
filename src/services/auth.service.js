@@ -2,24 +2,31 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const prisma = require("../config/prismaClient");
+const EmailService = require("../helpers/email");
 require("dotenv").config();
 
 // Generate JWT Token (access token) with short expiration
-const generateToken = (user) => {
+const generateToken = (user, expiresIn = "15m") => {
   return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: "1m",
+    expiresIn,
   });
 };
 
 // Generate Refresh Token (longer expiry)
 const generateRefreshToken = (user) => {
   return jwt.sign(
-    { id: user.id, role: user.role },
+    { id: user.id, role: user.role, type: "refresh" },
     process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: "30d",
-    }
+    { expiresIn: "30d" }
   );
+};
+
+// Revoke all refresh tokens for a user
+const revokeUserTokens = async (userId) => {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { authToken: crypto.randomUUID() },
+  });
 };
 
 // Signup Service with account verification
@@ -28,7 +35,6 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
   if (existingUser) throw new Error("Email already in use");
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  // Generate a random verification token
   const verificationToken = crypto.randomBytes(32).toString("hex");
 
   const user = await prisma.user.create({
@@ -43,11 +49,36 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
     },
   });
 
-  // Here you would typically send an email containing a link like:
-  // http://yourdomain.com/api/auth/verify/<verificationToken>
-  console.log(`Verify your account via: /api/auth/verify/${verificationToken}`);
+  // Send verification email
+  await EmailService.sendVerificationEmail(email, verificationToken);
 
   return { user, token: generateToken(user) };
+};
+
+// Signin Service
+exports.signin = async ({ identifier, password }) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email: identifier }, { username: identifier }],
+    },
+  });
+  if (!user) throw new Error("Invalid credentials");
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new Error("Invalid credentials");
+
+  if (!user.verified) {
+    throw new Error("Please verify your account before logging in.");
+  }
+
+  // Revoke previous tokens and generate new ones
+  await revokeUserTokens(user.id);
+
+  return {
+    user,
+    token: generateToken(user),
+    refreshToken: generateRefreshToken(user),
+  };
 };
 
 // Account Verification Service
@@ -61,31 +92,6 @@ exports.verifyAccount = async (token) => {
     where: { id: user.id },
     data: { verified: true, verificationToken: null },
   });
-};
-
-// Signin Service
-exports.signin = async ({ identifier, password }) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      OR: [{ email: identifier }, { username: identifier }],
-    },
-  });
-  if (!user) throw new Error("Invalid email or username");
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error("Invalid  password");
-
-  // Optionally check if the account is verified:
-  if (!user.verified) {
-    throw new Error("Please verify your account before logging in.");
-  }
-
-  // Return both access and refresh tokens
-  return {
-    user,
-    token: generateToken(user),
-    refreshToken: generateRefreshToken(user),
-  };
 };
 
 // Forgot Password Service
@@ -102,11 +108,8 @@ exports.forgotPassword = async (email) => {
     data: { resetPasswordToken: resetToken, resetPasswordExpires },
   });
 
-  // Send an email with the reset token link:
-  // e.g., http://yourdomain.com/api/auth/reset-password?token=<resetToken>
-  console.log(
-    `Reset your password via: /api/auth/reset-password?token=${resetToken}`
-  );
+  // Send password reset email
+  await EmailService.sendPasswordResetEmail(email, resetToken);
 
   return { message: "Password reset link has been sent to your email" };
 };
@@ -137,8 +140,15 @@ exports.resetPassword = async ({ token, newPassword }) => {
 exports.refreshAccessToken = async (refreshToken) => {
   try {
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    const user = await prisma.user.findUnique({ where: { id: decoded.id } });
-    if (!user) throw new Error("User not found");
+
+    // Additional check against user's auth token (for revocation)
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    });
+
+    if (!user || decoded.type !== "refresh") {
+      throw new Error("Invalid refresh token");
+    }
 
     return { token: generateToken(user) };
   } catch (error) {
