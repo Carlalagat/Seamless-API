@@ -36,6 +36,7 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const verificationToken = crypto.randomBytes(32).toString("hex");
+  const verificationTokenExpires = new Date(Date.now() + 3600000); // 1 hour from now
 
   const user = await prisma.user.create({
     data: {
@@ -45,6 +46,7 @@ exports.signup = async ({ username, email, password, phoneNumber, role }) => {
       phoneNumber,
       role,
       verificationToken,
+      verificationTokenExpires,
       verified: false,
     },
   });
@@ -84,13 +86,20 @@ exports.signin = async ({ identifier, password }) => {
 // Account Verification Service
 exports.verifyAccount = async (token) => {
   const user = await prisma.user.findFirst({
-    where: { verificationToken: token },
+    where: { 
+      verificationToken: token,
+      verificationTokenExpires: { gt: new Date() }, // Add token expiration check
+    },
   });
-  if (!user) throw new Error("Invalid verification token");
+  if (!user) throw new Error("Invalid or expired verification token");
 
   return await prisma.user.update({
     where: { id: user.id },
-    data: { verified: true, verificationToken: null },
+    data: { 
+      verified: true, 
+      verificationToken: null,
+      verificationTokenExpires: null
+    },
   });
 };
 

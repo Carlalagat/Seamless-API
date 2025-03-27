@@ -24,7 +24,7 @@ exports.signin = async (req, res) => {
 
 exports.verifyAccount = async (req, res) => {
   try {
-    const { token } = req.params;
+    const { token } = req.body;
     const user = await authService.verifyAccount(token);
     res.status(200).json({ message: "Account verified successfully", user });
   } catch (error) {
