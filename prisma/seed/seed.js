@@ -291,6 +291,26 @@ async function seed() {
     { clientIndex: 4, productIndex: 6, measurementIndex: 4 },
   ];
 
+  // Function to generate a random delivery address
+function generateRandomAddress() {
+  const streetNumbers = [
+    '123', '456', '789', '101', '242', '567', '890', '321', '654', '987'
+  ];
+  const streetNames = [
+    'Main St', 'Oak Ave', 'Cedar Rd', 'Pine Lane', 'Maple Drive', 
+    'Elm Street', 'Willow Way', 'Birch Boulevard', 'Acacia Road', 'Jacaranda Street'
+  ];
+  const cities = [
+    'Nakuru', 'Nairobi', 'Mombasa', 'Kisumu', 'Eldoret'
+  ];
+
+  const streetNumber = streetNumbers[Math.floor(Math.random() * streetNumbers.length)];
+  const streetName = streetNames[Math.floor(Math.random() * streetNames.length)];
+  const city = cities[Math.floor(Math.random() * cities.length)];
+
+  return `${streetNumber} ${streetName}, ${city}`;
+}
+
   for (let i = 0; i < orderData.length; i++) {
     const order = orderData[i];
     const client = clients[order.clientIndex];
@@ -306,7 +326,7 @@ async function seed() {
           status: getRandomFloat(10, 100),
           deliveryPrice: getRandomFloat(200, 500),
           totalPrice: product.price + getRandomFloat(200, 500),
-          deliveryAddress: 123 , // This should be a string, not a float - schema issue
+          deliveryAddress: generateRandomAddress(), // Generate a random address string
           deliveryDate: getRandomFutureDate(),
           orderDate: getRandomPastDate(),
         },
