@@ -15,7 +15,7 @@ class EmailService {
   }
 
   async sendVerificationEmail(email, token) {
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify/${token}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/verify?token=${token}`;
 
     await this.transporter.sendMail({
       from: `SeamLess App <${process.env.EMAIL_FROM}>`,
