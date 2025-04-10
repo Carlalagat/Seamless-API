@@ -1,6 +1,6 @@
 class CreateProductDto {
   constructor({
-    fabric_id,productName, description, price, location, tailorName
+    fabric_id, productName, description, price, location, tailorName, user_id, media = []
   })
   {
     this.fabric_id = fabric_id;
@@ -9,11 +9,14 @@ class CreateProductDto {
     this.price = price;
     this.location = location;
     this.tailorName = tailorName;
+    this.user_id = user_id;
+    this.media = media;
   }
 }
+
 class UpdateProductDto {
   constructor({
-    fabric_id, productName, description, price, location, tailorName
+    fabric_id, productName, description, price, location, tailorName, media = []
   })
   {
     this.fabric_id = fabric_id;
@@ -22,6 +25,7 @@ class UpdateProductDto {
     this.price = price;
     this.location = location;
     this.tailorName = tailorName;
+    this.media = media;
   }
 }
 
