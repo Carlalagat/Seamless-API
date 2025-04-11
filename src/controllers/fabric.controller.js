@@ -27,29 +27,6 @@ const getFabricById = async (req, res) => {
     }
 };
 
-const createFabric = async (req, res) => {
-    try {
-        const fabric = await prisma.fabric.create({
-            data: req.body,
-        });
-        res.status(201).json(fabric);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-const updateFabric = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const fabric = await prisma.fabric.update({
-            where: { id: Number(id) },
-            data: req.body,
-        });
-        res.status(200).json(fabric);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
 
 const deleteFabric = async (req, res) => {
     try {
@@ -66,7 +43,5 @@ const deleteFabric = async (req, res) => {
 module.exports = {
     getAllFabrics,
     getFabricById,
-    createFabric,
-    updateFabric,
     deleteFabric,
 };

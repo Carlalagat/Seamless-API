@@ -1,4 +1,5 @@
 const fabrictypeService = require("../services/fabrictype.service");
+const { CreateFabricTypeDto, UpdateFabricTypeDto } = require("../dto/fabrictype.dto");
 const { createFabrictype } = require("./fabrictype.controller");
 
 // Get all fabric types
@@ -36,7 +37,8 @@ exports.createFabrictype = async (req, res) => {
 // Update fabrictype details
 exports.updateFabrictypeById = async (req, res) => {
     try {
-        const fabrictype = await fabrictypeService.updateFabrictypeById(req.params.id, fabrictypeData);
+        const fabricTypeData = new UpdateFabricTypeDto(req.body);
+        const fabrictype = await fabrictypeService.updateFabrictypeById(req.params.id, fabricTypeData);
         if (!fabrictype) return res.status(404).json({ message: "Fabrictype not found" });
 
         await fabrictype.update(req.body);
