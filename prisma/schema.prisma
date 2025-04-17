@@ -29,6 +29,7 @@ model User {
   resetPasswordExpires  DateTime?                         // Expiry date for the reset password token
   createdAt             DateTime     @default(now())
   updatedAt             DateTime     @updatedAt
+  product               Product[]
   media                 Media[]
   reviews               Review[]
   Measurement           Measurement?
@@ -44,6 +45,8 @@ model Product {
   fabric      Fabric   @relation(fields: [fabric_id], references: [id], onDelete: Cascade)
   productName String
   description String?  @db.Text // Detailed description, optional, supports long text
+  user_id    String?
+  user       User?    @relation(fields: [user_id], references: [id], onDelete: SetNull) // Reference to the user
   price       Float
   location    String
   tailorName  String 

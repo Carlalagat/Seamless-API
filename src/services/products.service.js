@@ -32,6 +32,7 @@ exports.createProduct = async (productData, mediaFiles = []) => {
           description: productData.description,
           price: parseFloat(productData.price),
           location: productData.location,
+          user_id: productData.user_id,
           tailorName: productData.tailorName
         },
       });
