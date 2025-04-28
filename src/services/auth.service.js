@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const {create}=await import('node:crypto');
 const prisma = require("../config/prismaClient");
 const EmailService = require("../helpers/email");
 require("dotenv").config();
