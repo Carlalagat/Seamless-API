@@ -1,3 +1,4 @@
 {
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "postman.settings.dotenv-detection-notification-visibility": false
 }
