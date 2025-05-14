@@ -12,7 +12,7 @@ exports.createProduct = async (productData, mediaFiles = []) => {
   }
   
   try {
-    // Create product with fabric in a transaction with increased timeout
+    // Create product with fabric in a transaction with increased timeout.
     const productResult = await prisma.$transaction(async (prismaClient) => {
       // First create the fabric
       const fabric = await prismaClient.fabric.create({
