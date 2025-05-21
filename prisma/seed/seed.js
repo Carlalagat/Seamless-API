@@ -14,7 +14,8 @@ async function seed() {
   await prisma.fabricType.deleteMany(); // Delete fabric types before fabrics
   await prisma.fabric.deleteMany(); // Now it's safe to delete fabrics
   await prisma.user.deleteMany(); // Finally, delete users
-
+  await prisma.message.deleteMany();
+  await prisma.chat.deleteMany();
   console.log("Database cleared successfully.");
 
   console.log("Seeding data...");
@@ -33,7 +34,8 @@ async function seed() {
       verified: true,
       verificationToken: null,
     },
-  });
+    });
+  } // <-- Add this closing brace for the seed function
   console.log("Created admin user:", adminUser.username);
 
   // 2. Create Tailors (using createMany with Promise.all to precompute hashed passwords)
@@ -292,24 +294,41 @@ async function seed() {
   ];
 
   // Function to generate a random delivery address
-function generateRandomAddress() {
-  const streetNumbers = [
-    '123', '456', '789', '101', '242', '567', '890', '321', '654', '987'
-  ];
-  const streetNames = [
-    'Main St', 'Oak Ave', 'Cedar Rd', 'Pine Lane', 'Maple Drive', 
-    'Elm Street', 'Willow Way', 'Birch Boulevard', 'Acacia Road', 'Jacaranda Street'
-  ];
-  const cities = [
-    'Nakuru', 'Nairobi', 'Mombasa', 'Kisumu', 'Eldoret'
-  ];
+  function generateRandomAddress() {
+    const streetNumbers = [
+      "123",
+      "456",
+      "789",
+      "101",
+      "242",
+      "567",
+      "890",
+      "321",
+      "654",
+      "987",
+    ];
+    const streetNames = [
+      "Main St",
+      "Oak Ave",
+      "Cedar Rd",
+      "Pine Lane",
+      "Maple Drive",
+      "Elm Street",
+      "Willow Way",
+      "Birch Boulevard",
+      "Acacia Road",
+      "Jacaranda Street",
+    ];
+    const cities = ["Nakuru", "Nairobi", "Mombasa", "Kisumu", "Eldoret"];
 
-  const streetNumber = streetNumbers[Math.floor(Math.random() * streetNumbers.length)];
-  const streetName = streetNames[Math.floor(Math.random() * streetNames.length)];
-  const city = cities[Math.floor(Math.random() * cities.length)];
+    const streetNumber =
+      streetNumbers[Math.floor(Math.random() * streetNumbers.length)];
+    const streetName =
+      streetNames[Math.floor(Math.random() * streetNames.length)];
+    const city = cities[Math.floor(Math.random() * cities.length)];
 
-  return `${streetNumber} ${streetName}, ${city}`;
-}
+    return `${streetNumber} ${streetName}, ${city}`;
+  }
 
   for (let i = 0; i < orderData.length; i++) {
     const order = orderData[i];
@@ -395,9 +414,269 @@ function generateRandomAddress() {
   }
   console.log(`Created ${reviews.length} reviews`);
 
-  console.log("Database seeding completed successfully.");
+  // 9. Create  chats between tailor and clients
+console.log("Creating conversations between tailors and clients");
+const conversations = [];
+for (let clientIndex = 0; clientIndex < clients.length; clientIndex++) {
+  for (let tailorIndex = 0; tailorIndex < tailors.length; tailorIndex++) {
+    try {
+      const newConversation = await prisma.conversation.create({
+        data: {
+          clientId: clients[clientIndex].id,
+          tailorId: tailors[tailorIndex].id,
+          createdAt: getRandomPastDate(),
+          updatedAt: new Date(),
+        },
+      });
+      conversations.push(newConversation);
+    } catch (error) {
+      console.warn(`Failed to create conversation: ${error.message}`);
+    }
+  }
+}
+console.log(`Created ${conversations.length} conversations`);
+
+console.log("Creating messages in conversations...");
+const messages = [];
+const conversationTemplates = [
+  // Template 1: Initial inquiry about a product
+  [
+    {
+      senderIsClient: true,
+      content:
+        "Hello! I'm interested in ordering a custom outfit. Are you available for new orders?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Hello! Yes, I'm currently taking new orders. What type of outfit are you looking for?",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "I need a formal suit for an upcoming wedding. Do you have any fabric recommendations?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Great choice! I have several premium fabrics that would work well. Our linen and Ankara fabrics are quite popular for wedding events.",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "Sounds good. How much would a basic suit cost and what's your turnaround time?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Basic suits start at Ksh 4,500. Turnaround time is typically 10-14 days, but we can expedite for special occasions.",
+    },
+    {
+      senderIsClient: true,
+      content: "Perfect! Can we schedule a fitting appointment?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Absolutely! I'm available this Friday and Saturday. Would either of those work for you?",
+    },
+  ],
+
+  // Template 2: Order status inquiry
+  [
+    {
+      senderIsClient: true,
+      content:
+        "Hi, I'm checking on the status of my order #1234. Is it on schedule?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Hello! Let me check that for you. Yes, your order is progressing well. We're in the final stages of stitching.",
+    },
+    {
+      senderIsClient: true,
+      content: "That's great! When do you think it will be ready for pickup?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "We should be done by Thursday. Would you prefer pickup or delivery?",
+    },
+    {
+      senderIsClient: true,
+      content: "I'll pick it up myself. What time do you close on Thursday?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "We're open until 6:00 PM on Thursday. Looking forward to seeing you then!",
+    },
+  ],
+  // Template 3: Measurement clarification
+  [
+    {
+      senderIsClient: false,
+      content:
+        "Good afternoon! I noticed a discrepancy in the measurements you provided. Could we verify your sleeve length?",
+    },
+    {
+      senderIsClient: true,
+      content: "Of course! What seems to be the issue?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "The sleeve measurement seems a bit short at 22cm. Most clients with your chest size have sleeves around 24-25cm.",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "You're right, that does sound short. Let me re-measure... You're correct, it should be 24.5cm.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Perfect, I'll update the measurements. This will ensure a much better fit for your garment.",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "Thank you for catching that! I appreciate your attention to detail.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "You're welcome! We want to make sure everything fits perfectly.",
+    },
+  ],
+  // Template 4: Custom design discussion
+  [
+    {
+      senderIsClient: true,
+      content:
+        "Hi, I have a specific design in mind for my outfit. Can we discuss some custom options?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Absolutely! I'd love to hear your ideas. Do you have any reference images or sketches?",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "Yes, I'll send you some inspiration photos shortly. I'm looking for a modern take on traditional Kitenge patterns.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "That sounds beautiful! Modern Kitenge designs are my specialty. What color scheme were you thinking of?",
+    },
+    {
+      senderIsClient: true,
+      content:
+        "I'm leaning towards earth tones - browns, deep greens, and hints of orange.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Excellent choice! I have some beautiful fabrics that would work perfectly with those colors. Would you like me to send you some samples?",
+    },
+    {
+      senderIsClient: true,
+      content: "That would be wonderful! Thank you for your help.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "You're welcome! I'll prepare some samples for you to review. Looking forward to creating something special for you!",
+    },
+  ],
+
+  // Template 5: Alterations request
+  [
+    {
+      senderIsClient: true,
+      content:
+        "Hello! I received my outfit yesterday, but I think the waist needs some adjustment. It's a bit loose.",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "I'm sorry to hear that! We can definitely make alterations for you. When would you be able to come in?",
+    },
+    {
+      senderIsClient: true,
+      content: "Would tomorrow morning around 10 AM work?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Yes, 10 AM tomorrow works perfectly. Please bring the garment and we'll adjust it while you wait.",
+    },
+    {
+      senderIsClient: true,
+      content: "Perfect! Approximately how long will it take?",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "For a waist adjustment, it should take about 30-45 minutes. We'll have you on your way quickly!",
+    },
+    {
+      senderIsClient: true,
+      content: "Great, see you tomorrow at 10. Thank you!",
+    },
+    {
+      senderIsClient: false,
+      content:
+        "Looking forward to it! We'll have your outfit fitting perfectly in no time.",
+    },
+  ],
+];
+
+// Generate messages for each chat using the templates
+for (let i = 0; i < conversations.length; i++) {
+  const conversation = conversations[i];
+  // Select a random conversation template
+  const template = conversationTemplates[i % conversationTemplates.length];
+
+  // Create a base date for this conversation (1-14 days ago)
+  const baseDate = new Date();
+  baseDate.setDate(baseDate.getDate() - Math.floor(Math.random() * 14) - 1);
+
+  for (let j = 0; j < template.length; j++) {
+    const messageTemplate = template[j];
+    const messageDate = new Date(baseDate);
+    // Add 1-4 hours between messages
+    messageDate.setHours(
+      messageDate.getHours() + j * (1 + Math.floor(Math.random() * 3))
+    );
+
+    try {
+    
+      const senderId = messageTemplate.senderIsClient
+        ? conversation.clientId
+        : conversation.tailorId;
+
+      const newMessage = await prisma.message.create({
+        data: {
+          conversationId: conversation.id,
+          senderId: senderId,
+          text: messageTemplate.content,
+          createdAt: messageDate, 
+          read: Math.random() > 0.3, // 70% chance the message has been read
+        },
+      });
+      messages.push(newMessage);
+    } catch (error) {
+      console.warn(`Failed to create message: ${error.message}`);
+    }
+  }
 }
 
+console.log(`Created ${messages.length} messages`);
+console.log("Database seeding completed successfully.");
 // Helper Functions
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
